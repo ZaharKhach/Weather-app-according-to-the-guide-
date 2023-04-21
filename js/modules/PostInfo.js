@@ -1,21 +1,21 @@
-function PostInfo(obj, selectorAfter) {
-    //Создаем обложку
-    const cardWrapper = `
+function PostInfo({ name, country, temp, condition, imgSrc }, selectorAfter) {
+  //Создаем обложку
+  const cardWrapper = `
                   <div class="card">
 
-                  <h2 class="city">${obj.location.name}<span>${obj.location.country}</span></h2>
+                  <h2 class="city">${name}<span>${country}</span></h2>
                   
                   <div class="status-weather">
-                      <div class="temperature">${obj.current.temp_c.toFixed()}<sup>°c</sup></div>
-                      <img class="weather-view" src="./images/test.png" alt="">
+                      <div class="temperature">${temp}<sup>°c</sup></div>
+                      <img class="weather-view" src="${imgSrc}" alt="">
                   </div>
                   
-                  <div class="state">${obj.current.condition.text}</div>
+                  <div class="state">${condition}</div>
           
               </div>`;
 
-    //Отображаем ее на экран (выводим)
-    selectorAfter.insertAdjacentHTML("afterend", cardWrapper);
-  }
+  //Отображаем ее на экран (выводим)
+  selectorAfter.insertAdjacentHTML("afterend", cardWrapper);
+}
 
-export {PostInfo};
+export default PostInfo;
