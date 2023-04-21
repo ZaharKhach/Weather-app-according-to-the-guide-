@@ -27,7 +27,7 @@ const getResourse = async (url) => {
         document.querySelector('.header').insertAdjacentHTML('afterend', wrapper);
 
         throw new Error(`Could not fetch status: ${res.status}`);
-    }//ессли у нас "не успешно" тогда выбросит ошибку 
+    }//если у нас "не успешно" тогда выбросит ошибку 
 
     return await res.json();
 }
