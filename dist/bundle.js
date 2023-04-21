@@ -2,6 +2,98 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./js/modules/PostInfo.js":
+/*!********************************!*\
+  !*** ./js/modules/PostInfo.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "PostInfo": () => (/* binding */ PostInfo)
+/* harmony export */ });
+function PostInfo(obj, selectorAfter) {
+    //Создаем обложку
+    const cardWrapper = `
+                  <div class="card">
+
+                  <h2 class="city">${obj.location.name}<span>${obj.location.country}</span></h2>
+                  
+                  <div class="status-weather">
+                      <div class="temperature">${obj.current.temp_c.toFixed()}<sup>°c</sup></div>
+                      <img class="weather-view" src="./images/test.png" alt="">
+                  </div>
+                  
+                  <div class="state">${obj.current.condition.text}</div>
+          
+              </div>`;
+
+    //Отображаем ее на экран (выводим)
+    selectorAfter.insertAdjacentHTML("afterend", cardWrapper);
+  }
+
+
+
+/***/ }),
+
+/***/ "./js/modules/deleteCard.js":
+/*!**********************************!*\
+  !*** ./js/modules/deleteCard.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "deleteCard": () => (/* binding */ deleteCard)
+/* harmony export */ });
+function deleteCard(selector) {
+    const prevCard = document.querySelector(selector);
+    if (prevCard) prevCard.remove()
+  }
+
+
+/***/ }),
+
+/***/ "./js/modules/formSubmited.js":
+/*!************************************!*\
+  !*** ./js/modules/formSubmited.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "formSubmited": () => (/* binding */ formSubmited)
+/* harmony export */ });
+/* harmony import */ var _services_services__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/services */ "./js/services/services.js");
+/* harmony import */ var _deleteCard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./deleteCard */ "./js/modules/deleteCard.js");
+/* harmony import */ var _PostInfo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PostInfo */ "./js/modules/PostInfo.js");
+
+
+
+
+function formSubmited() {
+    const apiKey = '201d45b5535942a3bed125217232104';
+    const form = document.querySelector('.form'),
+      header = document.querySelector('.header');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const data = new FormData(form);
+      const city = Object.fromEntries(data.entries()).city
+
+      const url = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`;
+      (0,_services_services__WEBPACK_IMPORTED_MODULE_0__.getResourse)(url)
+        .then(data => {
+          (0,_deleteCard__WEBPACK_IMPORTED_MODULE_1__.deleteCard)('.card');
+          (0,_PostInfo__WEBPACK_IMPORTED_MODULE_2__.PostInfo)(data, header)
+        });
+    })
+  }
+
+
+/***/ }),
+
 /***/ "./js/services/services.js":
 /*!*********************************!*\
   !*** ./js/services/services.js ***!
@@ -115,58 +207,10 @@ var __webpack_exports__ = {};
   !*** ./js/script.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _services_services__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./services/services */ "./js/services/services.js");
-
+/* harmony import */ var _modules_formSubmited__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/formSubmited */ "./js/modules/formSubmited.js");
 
 window.addEventListener('DOMContentLoaded', () => {
-
-  function deleteCard(selector) {
-    const prevCard = document.querySelector(selector);
-    if (prevCard) prevCard.remove()
-  }
-
-  function PostInfo(obj, selectorAfter) {
-    //Создаем обложку
-    const cardWrapper = `
-                  <div class="card">
-
-                  <h2 class="city">${obj.location.name}<span>${obj.location.country}</span></h2>
-                  
-                  <div class="status-weather">
-                      <div class="temperature">${obj.current.temp_c.toFixed()}<sup>°c</sup></div>
-                      <img class="weather-view" src="./images/test.png" alt="">
-                  </div>
-                  
-                  <div class="state">${obj.current.condition.text}</div>
-          
-              </div>`;
-
-    //Отображаем ее на экран (выводим)
-    selectorAfter.insertAdjacentHTML("afterend", cardWrapper);
-  }
-
-  formSubmited();
-
-  function formSubmited() {
-    const apiKey = '201d45b5535942a3bed125217232104';
-    const form = document.querySelector('.form'),
-      header = document.querySelector('.header');
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const data = new FormData(form);
-      const city = Object.fromEntries(data.entries()).city
-
-      const url = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`;
-      (0,_services_services__WEBPACK_IMPORTED_MODULE_0__.getResourse)(url)
-        .then(data => {
-          deleteCard('.card');
-          PostInfo(data, header)
-        });
-    })
-  }
-
+  (0,_modules_formSubmited__WEBPACK_IMPORTED_MODULE_0__.formSubmited)();
 })
 
 })();
