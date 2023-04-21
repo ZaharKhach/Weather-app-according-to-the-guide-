@@ -8,21 +8,21 @@ window.addEventListener('DOMContentLoaded', () => {
 
   function formSubmited() {
     const form = document.querySelector('.form'),
-      header = document.querySelector('.header'),
-      spiner = 'images/form/spinner.svg'
+      header = document.querySelector('.header');
+      spinerImg = "images/form/spinner.svg";
 
     form.addEventListener('submit', (e) => {
       //Отключаем стандартное поведение 
       e.preventDefault();
 
-      let spiner = document.createElement('img');
-      spiner.src = spiner;
-      spiner.style.cssText = `
-          display: blok;
-          margin: 0 auto;
-      `;
-
-      header.insertAdjacentElement("afterend", spiner);
+      // let spiner = document.createElement('img');
+      // spiner.src = spinerImg;
+      // spiner.style.cssText = `
+      //     display: blok;
+      //     margin: 0 auto;
+      // `;
+      // console.log(spiner)
+      // header.insertAdjacentElement("afterend", spiner);
 
       //Создаем обьект форм дата(руку набить) и присваиваем в сити название города
       const data = new FormData(form);
@@ -50,7 +50,6 @@ window.addEventListener('DOMContentLoaded', () => {
               </div>`;
 
           //Отображаем ее на экран (выводим)
-          spiner.remove();
           header.insertAdjacentHTML("afterend", cardWrapper);
         });
 
