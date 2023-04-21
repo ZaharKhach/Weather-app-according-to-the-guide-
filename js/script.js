@@ -1,8 +1,30 @@
 import { getResourse } from "./services/services";
 
 window.addEventListener('DOMContentLoaded', () => {
-  const apiKey = '201d45b5535942a3bed125217232104';
-  /FORM/  
+
+  function deleteCard(selector) {
+    const prevCard = document.querySelector(selector);
+    if (prevCard) prevCard.remove()
+  }
+
+  function PostInfo(obj, selectorAfter) {
+    //Создаем обложку
+    const cardWrapper = `
+                  <div class="card">
+                  <h2 class="city">${obj.location.name}<span>${obj.location.country}</span></h2>
+                  
+                  <div class="status-weather">
+                      <div class="temperature">${obj.current.temp_c.toFixed()}<sup>°c</sup></div>
+                      <img class="weather-view" src="./images/test.png" alt="">
+                  </div>
+                  
+                  <div class="state">${obj.current.condition.text}</div>
+          
+              </div>`;
+
+    //Отображаем ее на экран (выводим)
+    selectorAfter.insertAdjacentHTML("afterend", cardWrapper);
+  }
 
   formSubmited();
 
@@ -11,10 +33,10 @@ window.addEventListener('DOMContentLoaded', () => {
       header = document.querySelector('.header');
 
     form.addEventListener('submit', (e) => {
+      const apiKey = '201d45b5535942a3bed125217232104';
+
       //Отключаем стандартное поведение 
       e.preventDefault();
-
-
 
       //Создаем обьект форм дата(руку набить) и присваиваем в сити название города
       const data = new FormData(form);
@@ -25,27 +47,8 @@ window.addEventListener('DOMContentLoaded', () => {
       getResourse(url)
         .then(data => {
           console.log(data)
-          //удаляем предыдущюю
-          const prevCard = document.querySelector('.card');
-          if(prevCard) prevCard.remove()
-
-          //Создаем обложку
-          const cardWrapper = `
-                  <div class="card">
-
-                  <h2 class="city">${data.location.name}<span>${data.location.country}</span></h2>
-                  
-                  <div class="status-weather">
-                      <div class="temperature">${data.current.temp_c.toFixed()}<sup>°c</sup></div>
-                      <img class="weather-view" src="./images/test.png" alt="">
-                  </div>
-                  
-                  <div class="state">${data.current.condition.text}</div>
-          
-              </div>`;
-
-          //Отображаем ее на экран (выводим)
-          header.insertAdjacentHTML("afterend", cardWrapper);
+          deleteCard('.card');
+          PostInfo(data, header);
         });
 
     })
