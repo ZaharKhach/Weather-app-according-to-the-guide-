@@ -37,7 +37,11 @@ const getResourse = async (url) => {
     const res = await fetch(url);
 
     if (!res.ok) {
-        throw new Error(`Could not fetch status: ${res.status}`)
+        //иключительно для этого проекта
+        const wrapper = `<div class="card">Something went wrong...</div>`;
+        document.querySelector('.header').insertAdjacentHTML('afterend', wrapper);
+
+        throw new Error(`Could not fetch status: ${res.status}`);
     }//ессли у нас "не успешно" тогда выбросит ошибку 
 
     return await res.json();
@@ -116,27 +120,19 @@ __webpack_require__.r(__webpack_exports__);
 
 window.addEventListener('DOMContentLoaded', () => {
   const apiKey = '201d45b5535942a3bed125217232104';
-  /FORM/
+  /FORM/  
 
   formSubmited();
 
   function formSubmited() {
     const form = document.querySelector('.form'),
-      header = document.querySelector('.header'),
-      spiner = 'images/form/spinner.svg'
+      header = document.querySelector('.header');
 
     form.addEventListener('submit', (e) => {
       //Отключаем стандартное поведение 
       e.preventDefault();
 
-      let spiner = document.createElement('img');
-      spiner.src = spiner;
-      spiner.style.cssText = `
-          display: blok;
-          margin: 0 auto;
-      `;
 
-      header.insertAdjacentElement("afterend", spiner);
 
       //Создаем обьект форм дата(руку набить) и присваиваем в сити название города
       const data = new FormData(form);
@@ -146,7 +142,10 @@ window.addEventListener('DOMContentLoaded', () => {
       const url = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`;
       (0,_services_services__WEBPACK_IMPORTED_MODULE_0__.getResourse)(url)
         .then(data => {
-          //Отображаем полученные данные на странице 
+          console.log(data)
+          //удаляем предыдущюю
+          const prevCard = document.querySelector('.card');
+          if(prevCard) prevCard.remove()
 
           //Создаем обложку
           const cardWrapper = `
@@ -164,7 +163,6 @@ window.addEventListener('DOMContentLoaded', () => {
               </div>`;
 
           //Отображаем ее на экран (выводим)
-          spiner.remove();
           header.insertAdjacentHTML("afterend", cardWrapper);
         });
 

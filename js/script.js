@@ -2,7 +2,7 @@ import { getResourse } from "./services/services";
 
 window.addEventListener('DOMContentLoaded', () => {
   const apiKey = '201d45b5535942a3bed125217232104';
-  /FORM/
+  /FORM/  
 
   formSubmited();
 
@@ -14,6 +14,8 @@ window.addEventListener('DOMContentLoaded', () => {
       //Отключаем стандартное поведение 
       e.preventDefault();
 
+
+
       //Создаем обьект форм дата(руку набить) и присваиваем в сити название города
       const data = new FormData(form);
       const city = Object.fromEntries(data.entries()).city
@@ -22,7 +24,10 @@ window.addEventListener('DOMContentLoaded', () => {
       const url = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`;
       getResourse(url)
         .then(data => {
-          //Отображаем полученные данные на странице 
+          console.log(data)
+          //удаляем предыдущюю
+          const prevCard = document.querySelector('.card');
+          if(prevCard) prevCard.remove()
 
           //Создаем обложку
           const cardWrapper = `

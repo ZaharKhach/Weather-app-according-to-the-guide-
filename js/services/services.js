@@ -22,7 +22,11 @@ const getResourse = async (url) => {
     const res = await fetch(url);
 
     if (!res.ok) {
-        throw new Error(`Could not fetch status: ${res.status}`)
+        //иключительно для этого проекта
+        const wrapper = `<div class="card">Something went wrong...</div>`;
+        document.querySelector('.header').insertAdjacentHTML('afterend', wrapper);
+
+        throw new Error(`Could not fetch status: ${res.status}`);
     }//ессли у нас "не успешно" тогда выбросит ошибку 
 
     return await res.json();
