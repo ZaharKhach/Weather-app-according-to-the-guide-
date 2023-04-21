@@ -2,10 +2,9 @@ import { getResourse } from "../services/services";
 import { deleteCard }  from "./deleteCard";
 import { PostInfo } from "./PostInfo";
 
-function formSubmited() {
-    const apiKey = '201d45b5535942a3bed125217232104';
-    const form = document.querySelector('.form'),
-      header = document.querySelector('.header');
+function formSubmited(apiKey, formSelector, headerSelector) {
+    const form = document.querySelector(formSelector),
+      header = document.querySelector(headerSelector);
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();

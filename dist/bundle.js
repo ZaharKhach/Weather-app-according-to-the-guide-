@@ -71,10 +71,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function formSubmited() {
-    const apiKey = '201d45b5535942a3bed125217232104';
-    const form = document.querySelector('.form'),
-      header = document.querySelector('.header');
+function formSubmited(apiKey, formSelector, headerSelector) {
+    const form = document.querySelector(formSelector),
+      header = document.querySelector(headerSelector);
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -105,6 +104,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "getResourse": () => (/* binding */ getResourse),
 /* harmony export */   "postData": () => (/* binding */ postData)
 /* harmony export */ });
+/* harmony import */ var _modules_deleteCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../modules/deleteCard */ "./js/modules/deleteCard.js");
+
 const postData = async (url, data) => {
     const res = await fetch(url, {
         method: 'POST',
@@ -130,6 +131,7 @@ const getResourse = async (url) => {
 
     if (!res.ok) {
         //иключительно для этого проекта
+        (0,_modules_deleteCard__WEBPACK_IMPORTED_MODULE_0__.deleteCard)('.card');
         const wrapper = `<div class="card">Something went wrong...</div>`;
         document.querySelector('.header').insertAdjacentHTML('afterend', wrapper);
 
@@ -210,7 +212,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_formSubmited__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/formSubmited */ "./js/modules/formSubmited.js");
 
 window.addEventListener('DOMContentLoaded', () => {
-  (0,_modules_formSubmited__WEBPACK_IMPORTED_MODULE_0__.formSubmited)();
+  (0,_modules_formSubmited__WEBPACK_IMPORTED_MODULE_0__.formSubmited)('201d45b5535942a3bed125217232104', '.form', '.header');
 })
 
 })();

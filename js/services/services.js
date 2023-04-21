@@ -1,3 +1,4 @@
+import { deleteCard } from "../modules/deleteCard";
 const postData = async (url, data) => {
     const res = await fetch(url, {
         method: 'POST',
@@ -23,6 +24,7 @@ const getResourse = async (url) => {
 
     if (!res.ok) {
         //иключительно для этого проекта
+        deleteCard('.card');
         const wrapper = `<div class="card">Something went wrong...</div>`;
         document.querySelector('.header').insertAdjacentHTML('afterend', wrapper);
 
