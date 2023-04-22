@@ -1,3 +1,4 @@
+import  deleteCard  from "../modules/deleteCard";
 const postData = async (url, data) => {
     const res = await fetch(url, {
         method: 'POST',
@@ -23,11 +24,12 @@ const getResourse = async (url) => {
 
     if (!res.ok) {
         //иключительно для этого проекта
-        const wrapper = `<div class="card">Something went wrong...</div>`;
+        deleteCard('.card');
+        const wrapper = `<div class="card">Что-то пошло не так...</div>`;
         document.querySelector('.header').insertAdjacentHTML('afterend', wrapper);
 
         throw new Error(`Could not fetch status: ${res.status}`);
-    }//ессли у нас "не успешно" тогда выбросит ошибку 
+    }//если у нас "не успешно" тогда выбросит ошибку 
 
     return await res.json();
 }
